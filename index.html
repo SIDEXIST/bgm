@@ -138,21 +138,30 @@
         }
 
         // Firebase 데이터 동기화
-        db.ref(`rooms/${roomId}/state`).on('value', (snap) => {
-            const data = snap.val();
-            if (!data || !isPlayerReady) return;
+db.ref(`rooms/${roomId}/state`).on('value', (snap) => {
+    const data = snap.val();
+    if (!data || !isPlayerReady) return;
 
-            document.getElementById('current-title').innerText = data.customTitle;
-            const currentVid = player.getVideoData().video_id;
+    document.getElementById('current-title').innerText = data.customTitle;
+    const currentVid = player.getVideoData().video_id;
 
-            if (currentVid !== data.videoId) {
-                player.loadVideoById(data.videoId);
-            }
+    // 1. 영상 자체가 바뀌었을 때
+    if (currentVid !== data.videoId) {
+        player.loadVideoById(data.videoId);
+    }
 
-            if (data.status === 'playing') player.playVideo();
-            else if (data.status === 'paused') player.pauseVideo();
-            else if (data.status === 'stopped') player.stopVideo();
-        });
+    // 2. 상태(재생/일시정지/정지) 제어
+    if (data.status === 'playing') {
+        player.playVideo();
+    } 
+    else if (data.status === 'paused') {
+        player.pauseVideo();
+    } 
+    else if (data.status === 'stopped') {
+        player.pauseVideo(); // 일단 멈춤
+        player.seekTo(0);    // 0초로 이동 (정지 효과)
+    }
+});
 
         // 호스트 컨트롤 함수
         let playlist = [];
