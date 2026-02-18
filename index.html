@@ -10,65 +10,70 @@
         .container { width: 100%; max-width: 650px; display: none; }
         
         /* [모달] */
-        .modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.85); z-index: 30000; display: none; justify-content: center; align-items: center; }
+        .modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.85); z-index: 50000; display: none; justify-content: center; align-items: center; }
         .modal-content { background: var(--card); padding: 25px; border-radius: 15px; width: 340px; border: 1px solid var(--accent); box-sizing: border-box; }
+        
+        /* [입장 화면] - 최우선 순위 */
+        #login-screen { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: var(--bg); z-index: 20000; display: flex; flex-direction: column; justify-content: center; align-items: center; }
+        .login-card { background: var(--card); padding: 30px; border-radius: 15px; border: 1px solid #333; text-align: center; width: 340px; }
+        
+        /* [사운드 활성화] - 입장 후에만 떠야 함 */
+        #audio-unlock { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.95); z-index: 30000; display: none; flex-direction: column; justify-content: center; align-items: center; cursor: pointer; }
         
         /* [레이아웃] */
         #players-container { width: 1px; height: 1px; overflow: hidden; position: absolute; opacity: 0; }
         .card { background: var(--card); border-radius: 12px; padding: 18px; margin-bottom: 15px; border: 1px solid #333; position: relative; }
-        .flex-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; gap: 10px; }
+        .flex-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; gap: 10px; }
         
-        /* [4] 대제목 폰트 크기 통일 (1.05rem) */
         h2, h3, .section-title { color: var(--primary); margin: 0; font-size: 1.05rem; font-weight: bold; }
         .section-title { color: #fff; text-shadow: 0 0 10px rgba(0,255,255,0.3); margin-top: 15px; margin-bottom: 10px; }
 
-        input, button { background: #2c2c2c; color: #fff; border: 1px solid #444; padding: 10px; border-radius: 6px; margin: 4px 0; width: 100%; box-sizing: border-box; }
+        input, button { background: #2c2c2c; color: #fff; border: 1px solid #444; padding: 10px; border-radius: 6px; margin: 4px 0; width: 100%; box-sizing: border-box; display: block; }
         button { cursor: pointer; border: none; font-weight: bold; font-size: 0.85rem; display: flex; align-items: center; justify-content: center; }
 
-        /* [3] My Master Volume 디자인 원상복구 */
+        /* My Master Volume */
         .guest-master-vol { background: #333; padding: 12px; border-radius: 10px; margin-bottom: 15px; border: 1px solid var(--accent); }
         .vol-header { display: flex; justify-content: space-between; align-items: center; gap: 10px; margin-bottom: 5px; }
         .vol-title { font-size: 1.05rem; font-weight: bold; color: var(--accent); white-space: nowrap; }
         .vol-desc { font-size: 0.65rem; color: #888; flex: 1; text-align: left; margin: 0; }
 
-        /* [현재 재생 중인 BGM] */
+        /* 현재 재생 중인 BGM */
         .active-track-item { background: #252525; padding: 15px; border-radius: 10px; margin-top: 10px; border-left: 4px solid var(--accent); }
         .active-controls { display: flex; gap: 4px; flex-shrink: 0; align-items: center; width: 62%; }
-        .btn-status { height: 28px; font-size: 0.65rem; background: var(--primary); color: #000; flex: 1; border-radius: 4px; padding: 0; }
+        .btn-status { height: 28px; font-size: 0.65rem; background: var(--primary); color: #000; flex: 1; border-radius: 4px; padding: 0; margin: 0; }
         .btn-status.active { background: var(--accent) !important; font-weight: 800; }
-        .btn-delete { background: #444; color: #fff; flex: 1.2 !important; height: 28px; }
+        .btn-delete { background: #444; color: #fff; flex: 1.2 !important; height: 28px; margin: 0; }
 
         .slider-row { display: flex; align-items: center; gap: 10px; margin-top: 10px; width: 100%; }
         .vol-text { font-size: 0.75rem; min-width: 40px; color: var(--accent); text-decoration: underline; cursor: pointer; text-align: right; }
-        input[type="range"] { -webkit-appearance: none; height: 6px; border-radius: 3px; outline: none; background: #222; border: 1px solid #333; }
+        input[type="range"] { -webkit-appearance: none; height: 6px; border-radius: 3px; outline: none; background: #222; border: 1px solid #333; width: 100%; display: inline-block; }
         input[type="range"]::-webkit-slider-thumb { -webkit-appearance: none; height: 14px; width: 14px; border-radius: 50%; background: var(--accent); cursor: pointer; }
         .vol-slider { background: linear-gradient(to right, var(--accent) 0%, var(--accent) var(--p), #444 var(--p)) !important; border: none !important; }
         .time-text { font-size: 0.65rem; color: #888; min-width: 80px; text-align: right; font-family: monospace; }
 
-        /* [플레이리스트] */
+        /* 플레이리스트 */
         .playlist-item { background: #252525; padding: 12px; border-radius: 8px; margin-bottom: 8px; border: 1px solid #333; cursor: grab; }
+        .item-main { display: flex; justify-content: space-between; align-items: center; width: 100%; }
         .btn-group { display: flex; gap: 4px; align-items: center; }
-        .small-btn { height: 26px; padding: 0 8px; font-size: 0.65rem; border-radius: 4px; min-width: 42px; text-align: center; }
+        .small-btn { height: 26px; padding: 0 8px; font-size: 0.65rem; border-radius: 4px; min-width: 42px; text-align: center; margin: 0; }
         .btn-play-toggle.on { background: var(--accent) !important; font-weight: 800; }
         
-        /* [2] 링크 텍스트 색상 및 원제 크기 통일 */
         .item-meta { font-size: 0.65rem; color: #777; margin-top: 8px; display: flex; align-items: center; gap: 8px; overflow: hidden; white-space: nowrap; }
         .meta-link { color: #777; text-decoration: none; font-family: monospace; flex-shrink: 0; }
         .meta-title { color: #777; overflow: hidden; text-overflow: ellipsis; flex: 1; font-size: 0.65rem; }
-        .copy-icon { cursor: pointer; color: #777; font-size: 0.8rem; flex-shrink: 0; }
 
-        /* [접속자 명단] */
+        /* 접속자 명단 */
         #user-list-container { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 10px; }
         .user-tag { display: flex; align-items: center; padding: 0 10px; height: 24px; border-radius: 20px; background: #333; font-size: 0.75rem; border: 1px solid #444; color: #ccc; }
         .user-tag.host { border-color: var(--primary); color: var(--primary); }
 
-        /* [시스템 로그] */
+        /* 시스템 로그 */
         #log-area { font-size: 0.8rem; color: #aaa; background: #000; padding: 12px; border-radius: 5px; height: 100px; overflow-y: auto; border: 1px solid #333; line-height: 1.5; }
         
-        /* [1] 곡 추가 배치 및 정렬 */
-        .add-music-header-controls { display: flex; align-items: center; gap: 8px; }
-        .loop-label-wrapper { display: flex; align-items: center; gap: 5px; font-size: 0.75rem; cursor: pointer; color: #888; }
-        .header-btn { width: auto; padding: 4px 8px; font-size: 0.65rem; margin: 0; background: #444; }
+        /* [곡 추가 영역 3줄 구성] */
+        .add-music-header-controls { display: flex; align-items: center; gap: 10px; }
+        .loop-label-wrapper { display: flex; align-items: center; gap: 5px; font-size: 0.75rem; cursor: pointer; color: #888; white-space: nowrap; }
+        .header-btn { width: auto; padding: 4px 10px; font-size: 0.65rem; margin: 0; background: #444; height: 26px; }
 
         .footer { text-align: center; font-size: 0.6rem; color: #444; margin-top: 30px; margin-bottom: 20px; }
         .host-only { display: none; }
@@ -143,15 +148,15 @@
         <div class="guest-master-vol">
             <div class="vol-header">
                 <span class="vol-title">My Master Volume</span>
-                <p class="vol-desc">* 나에게만 적용되는 음량입니다.</p>
+                <p class="vol-desc" style="flex:1; text-align:left; padding-left:10px;">* 나에게만 적용되는 음량입니다.</p>
                 <span id="guest-vol-text" class="vol-text" title="클릭하여 볼륨 조절" onclick="openVolModal('master')">100%</span>
             </div>
-            <input type="range" id="guest-master-slider" min="0" max="100" value="100" oninput="changeMyMasterVolume(this.value)" class="vol-slider" style="--p:100%; width:100%;">
+            <input type="range" id="guest-master-slider" min="0" max="100" value="100" oninput="changeMyMasterVolume(this.value)" class="vol-slider" style="--p:100%;">
         </div>
 
         <div class="card">
             <div class="flex-header">
-                <h2>ROOM: <span id="room-display"></span></h2>
+                <h2 id="room-display-title">ROOM: <span id="room-display"></span></h2>
                 <button onclick="copyInviteLink()" style="width:auto; padding:5px 10px; font-size:0.65rem; background:#444;">링크 복사</button>
             </div>
             <div id="players-container"></div>
@@ -170,8 +175,10 @@
                     <button onclick="addToPlaylist()" style="background:var(--accent); color:#000; width:60px; height:26px; padding:0; font-size:0.7rem;">추가</button>
                 </div>
             </div>
-            <input type="text" id="yt-url" placeholder="유튜브 URL">
-            <input type="text" id="custom-title" placeholder="표시 제목">
+            <div style="width: 100%;">
+                <input type="text" id="yt-url" placeholder="유튜브 URL" style="width:100%;">
+                <input type="text" id="custom-title" placeholder="표시 제목" style="width:100%;">
+            </div>
         </div>
 
         <div class="card">
@@ -221,16 +228,21 @@
 
         window.onload = () => {
             const params = new URLSearchParams(window.location.search);
-            if (params.get('room')) {
-                roomId = params.get('room');
+            const rId = params.get('room');
+            if (rId) {
+                roomId = rId;
                 document.getElementById('input-room-name').style.display = 'none';
                 document.getElementById('btn-host-login').style.display = 'none';
                 document.getElementById('btn-guest-login').style.display = 'block';
                 document.getElementById('guest-msg').style.display = 'block';
-                document.getElementById('login-title').innerText = "GUEST LOGIN";
+                
                 if (params.get('h') === '1') {
                     isHost = true;
+                    document.getElementById('login-title').innerText = "HOST LOGIN";
                     document.getElementById('btn-guest-login').innerText = "관리자 세션 복구";
+                    document.getElementById('btn-guest-login').style.background = "var(--primary)";
+                } else {
+                    document.getElementById('login-title').innerText = "GUEST LOGIN";
                 }
             }
         };
@@ -252,6 +264,7 @@
             }
 
             if (isHost) window.history.replaceState({}, '', `?room=${roomId}&h=1`);
+            
             document.getElementById('login-screen').style.display = 'none';
             document.getElementById('audio-unlock').style.display = 'flex';
             document.getElementById('main-container').style.display = 'block';
@@ -442,7 +455,7 @@
                     ` : ''}
                 `;
                 if (isHost) {
-                    div.ondragstart = () => div.classList.add('dragging');
+                    div.ondragstart = (e) => { div.classList.add('dragging'); e.dataTransfer.setData('text/plain', i); };
                     div.ondragend = () => { div.classList.remove('dragging'); saveOrder(); };
                 }
                 container.appendChild(div);
@@ -451,7 +464,7 @@
                 container.ondragover = e => {
                     e.preventDefault();
                     const next = [...container.querySelectorAll('.playlist-item:not(.dragging)')].find(s => e.clientY <= s.getBoundingClientRect().top + s.offsetHeight / 2);
-                    container.insertBefore(document.querySelector('.dragging'), next);
+                    container.insertBefore(dragging, next);
                 };
             }
         }
