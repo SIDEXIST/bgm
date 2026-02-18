@@ -9,73 +9,78 @@
         body { font-family: 'Pretendard', sans-serif; background: var(--bg); color: var(--text); margin: 0; padding: 20px; display: flex; justify-content: center; }
         .container { width: 100%; max-width: 650px; display: none; }
         
-        /* [중요] 팝업(모달) 레이아웃 오류 수정 */
+        /* [모달] */
         .modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.85); z-index: 30000; display: none; justify-content: center; align-items: center; }
         .modal-content { background: var(--card); padding: 25px; border-radius: 15px; width: 340px; border: 1px solid var(--accent); box-sizing: border-box; }
         
-        /* 입장 화면 */
+        /* [입장 화면] */
         #login-screen { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: var(--bg); z-index: 20000; display: flex; flex-direction: column; justify-content: center; align-items: center; }
         .login-card { background: var(--card); padding: 30px; border-radius: 15px; border: 1px solid #333; text-align: center; width: 340px; }
         #audio-unlock { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.95); z-index: 10000; display: none; flex-direction: column; justify-content: center; align-items: center; cursor: pointer; }
         
-        /* 레이아웃 */
+        /* [레이아웃 및 타이틀] */
         #players-container { width: 1px; height: 1px; overflow: hidden; position: absolute; opacity: 0; }
         .card { background: var(--card); border-radius: 12px; padding: 18px; margin-bottom: 15px; border: 1px solid #333; position: relative; }
         .flex-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; }
-        h2 { color: var(--primary); margin: 0; font-size: 1rem; }
         
-        /* [수정] 섹션 헤더 가독성 강화 */
-        .section-title { color: #fff; font-weight: 800; font-size: 0.95rem; margin: 15px 0 8px 0; text-shadow: 0 0 10px rgba(0,255,255,0.3); }
-        
+        /* 제목 크기 통일 (1rem) */
+        h2, h3, .section-title { color: var(--primary); margin: 0; font-size: 1rem; font-weight: bold; }
+        .section-title { color: #fff; text-shadow: 0 0 10px rgba(0,255,255,0.3); margin-top: 15px; margin-bottom: 10px; }
+
         input, button { background: #2c2c2c; color: #fff; border: 1px solid #444; padding: 10px; border-radius: 6px; margin: 4px 0; width: 100%; box-sizing: border-box; }
         button { cursor: pointer; border: none; font-weight: bold; font-size: 0.85rem; }
 
-        /* My Master Volume */
+        /* [상단] My Master Volume */
         .guest-master-vol { background: #333; padding: 12px; border-radius: 10px; margin-bottom: 15px; border: 1px solid var(--accent); }
         .vol-header { display: flex; justify-content: space-between; align-items: baseline; gap: 10px; }
         .vol-desc { font-size: 0.65rem; color: #888; margin: 0; }
 
-        /* 현재 재생 중인 BGM 곡 정보 (원래 스타일 복구) */
+        /* [현재 재생 중인 BGM] */
         .active-track-item { background: #252525; padding: 15px; border-radius: 10px; margin-top: 10px; border-left: 4px solid var(--accent); }
         .active-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; gap: 10px; }
         .active-title { font-weight: bold; color: var(--accent); font-size: 0.95rem; }
         .active-controls { display: flex; gap: 4px; flex-shrink: 0; align-items: center; width: 62%; }
         
-        /* 버튼 색상 체계 */
+        /* 버튼 색상: 상태 활성 시 시안색, 비활성 시 라벤더색 */
         .btn-status { padding: 6px 5px; font-size: 0.65rem; background: var(--primary); color: #000; flex: 1; border-radius: 4px; }
         .btn-status.active { background: var(--accent) !important; font-weight: 800; }
         .btn-delete { background: #444; color: #fff; flex: 1.2 !important; }
 
-        /* 슬라이더 및 재생바 구분 */
-        .slider-row { display: flex; align-items: center; gap: 8px; margin-top: 10px; width: 100%; }
+        /* 슬라이더(재생바 전용) */
+        .slider-row { display: flex; align-items: center; gap: 10px; margin-top: 10px; width: 100%; }
         .row-label { font-size: 0.7rem; color: #aaa; white-space: nowrap; }
         .vol-text { font-size: 0.75rem; min-width: 40px; color: var(--accent); text-decoration: underline; cursor: pointer; text-align: right; }
         
-        input[type="range"] { -webkit-appearance: none; height: 6px; border-radius: 3px; outline: none; background: #444; }
-        input[type="range"]::-webkit-slider-thumb { -webkit-appearance: none; height: 14px; width: 14px; border-radius: 50%; background: var(--accent); cursor: pointer; border: 2px solid #000; }
+        input[type="range"] { -webkit-appearance: none; height: 6px; border-radius: 3px; outline: none; background: #222; border: 1px solid #333; }
+        input[type="range"]::-webkit-slider-thumb { -webkit-appearance: none; height: 14px; width: 14px; border-radius: 50%; background: var(--accent); cursor: pointer; }
         
-        .vol-slider { background: linear-gradient(to right, var(--accent) 0%, var(--accent) var(--p), #444 var(--p)) !important; }
-        .progress-bar { background: #222 !important; border: 1px solid #333; flex: 1; }
+        /* 마스터 볼륨용 컬러 슬라이더 */
+        .vol-slider { background: linear-gradient(to right, var(--accent) 0%, var(--accent) var(--p), #444 var(--p)) !important; border: none !important; }
+
         .time-text { font-size: 0.65rem; color: #888; min-width: 80px; text-align: right; font-family: monospace; }
 
-        /* 플레이리스트 */
+        /* [플레이리스트] */
         .playlist-item { background: #252525; padding: 12px; border-radius: 8px; margin-bottom: 8px; border: 1px solid #333; cursor: grab; }
         .item-main { display: flex; justify-content: space-between; align-items: center; width: 100%; }
         .btn-group { display: flex; gap: 4px; align-items: center; }
         .small-btn { padding: 5px 8px; font-size: 0.65rem; min-width: 38px; border-radius: 4px; }
         
-        .btn-loop-on { background: var(--primary) !important; color: #000; }
-        .btn-loop-off { background: #555 !important; color: #ccc; }
-        .btn-play-toggle { background: var(--primary); color: #000; }
-        .btn-play-toggle.on { background: var(--accent) !important; font-weight: 800; }
-        
-        /* [수정] 플레이리스트 링크/제목 레이아웃 */
+        /* 플레이리스트 링크 및 원제 스타일 수정 */
         .item-meta { font-size: 0.65rem; color: #777; margin-top: 8px; display: flex; align-items: center; gap: 8px; overflow: hidden; white-space: nowrap; }
-        .meta-link { color: #00ffff; text-decoration: none; font-family: monospace; flex-shrink: 0; }
-        .meta-title { color: #888; overflow: hidden; text-overflow: ellipsis; flex: 1; }
-        .copy-icon { cursor: pointer; color: var(--accent); font-size: 0.8rem; flex-shrink: 0; }
+        .meta-link { color: #777; text-decoration: none; font-family: monospace; flex-shrink: 0; }
+        .meta-link:hover { text-decoration: underline; }
+        .meta-title { color: #777; overflow: hidden; text-overflow: ellipsis; flex: 1; font-size: 0.65rem; }
+        .copy-icon { cursor: pointer; color: #777; font-size: 0.8rem; flex-shrink: 0; }
+        .copy-icon:hover { color: var(--accent); }
 
-        #log-area { font-size: 0.65rem; color: #888; background: #000; padding: 10px; border-radius: 5px; height: 100px; overflow-y: auto; border: 1px solid #333; }
+        /* [접속자 명단 - 스티커 스타일 복구] */
+        #user-list-container { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 10px; }
+        .user-tag { display: inline-block; padding: 4px 10px; border-radius: 20px; background: #333; font-size: 0.75rem; border: 1px solid #444; color: #ccc; }
+        .user-tag.host { border-color: var(--primary); color: var(--primary); background: rgba(187, 134, 252, 0.1); }
+
+        /* [시스템 로그 - 폰트 크기 복구] */
+        #log-area { font-size: 0.8rem; color: #aaa; background: #000; padding: 12px; border-radius: 5px; height: 100px; overflow-y: auto; border: 1px solid #333; line-height: 1.5; }
+        
         .footer { text-align: center; font-size: 0.6rem; color: #444; margin-top: 30px; margin-bottom: 20px; }
         .host-only { display: none; }
     </style>
@@ -119,10 +124,14 @@
 
     <div id="login-screen">
         <div class="login-card">
-            <h1 style="color:var(--accent); font-size: 1rem; margin-bottom: 15px;">TRPG BGM from Youtube</h1>
+            <h1 id="login-title" style="color:var(--accent); font-size: 1rem; margin-bottom: 15px;">TRPG BGM from Youtube</h1>
             <input type="text" id="input-room-name" placeholder="방 이름을 입력하세요">
             <input type="text" id="input-nickname" placeholder="닉네임">
-            <button onclick="enterRoom('host')" style="background:var(--primary); color:#000;">방 생성 (호스트)</button>
+            <button id="btn-host-login" onclick="enterRoom('host')" style="background:var(--primary); color:#000;">방 생성 (호스트)</button>
+            <button id="btn-guest-login" onclick="enterRoom('guest')" style="background:var(--accent); color:#000; display:none;">입장</button>
+            <div id="guest-msg" style="display:none; margin-top:15px; font-size:0.8rem; color:#888;">
+                링크 접속 중입니다. 닉네임을 입력하고 입장하세요.
+            </div>
         </div>
     </div>
 
@@ -143,7 +152,7 @@
 
         <div class="card">
             <div class="flex-header">
-                <h2>ROOM: <span id="room-display"></span></h2>
+                <h2 id="room-display-title">ROOM: <span id="room-display"></span></h2>
                 <button onclick="copyInviteLink()" style="width:auto; padding:5px 10px; font-size:0.65rem; background:#444;">링크 복사</button>
             </div>
             <div id="players-container"></div>
@@ -175,12 +184,12 @@
         </div>
 
         <div class="card">
-            <h3 style="margin-bottom:10px; font-size: 0.85rem;">접속자 (<span id="user-count">0</span>)</h3>
+            <h3>접속자 (<span id="user-count">0</span>)</h3>
             <div id="user-list-container"></div>
         </div>
 
         <div class="card">
-            <h3 style="margin-bottom:8px; font-size: 0.85rem;">시스템 로그</h3>
+            <h3>시스템 로그</h3>
             <div id="log-area">로그 대기 중...</div>
         </div>
 
@@ -219,10 +228,19 @@
 
         window.onload = () => {
             const params = new URLSearchParams(window.location.search);
-            if (params.get('room')) {
-                roomId = params.get('room');
+            const rId = params.get('room');
+            if (rId) {
+                roomId = rId;
                 document.getElementById('input-room-name').style.display = 'none';
-                if (params.get('h') === '1') isHost = true;
+                document.getElementById('btn-host-login').style.display = 'none';
+                document.getElementById('btn-guest-login').style.display = 'block';
+                document.getElementById('guest-msg').style.display = 'block';
+                document.getElementById('login-title').innerText = "GUEST LOGIN";
+                if (params.get('h') === '1') {
+                    isHost = true;
+                    document.getElementById('btn-guest-login').innerText = "관리자 세션 복구";
+                    document.getElementById('btn-guest-login').style.background = "var(--primary)";
+                }
             }
         };
 
@@ -233,9 +251,6 @@
 
             if (role === 'host' && !roomId) {
                 const rName = document.getElementById('input-room-name').value.trim();
-                const usersSnap = await db.ref(`rooms/${roomId}/users`).once('value');
-                if (Object.values(usersSnap.val() || {}).some(u => u.isHost)) return alert("이미 호스트가 있습니다.");
-                
                 isHost = true;
                 roomName = rName || "TRPG SESSION";
                 roomId = Math.random().toString(36).substring(2, 10);
@@ -347,11 +362,11 @@
                         </div>
                         <div class="slider-row">
                             <span class="row-label">재생 볼륨</span>
-                            <span class="vol-text" onclick="${isHost?`openVolModal('active', '${vid}')`:''}">${vol}%</span>
-                            <input type="range" min="0" max="100" value="${vol}" disabled class="vol-slider" style="--p:${vol}%; flex:0.25;">
-                            <div style="width:10px;"></div>
-                            <input type="range" class="progress-bar" id="bar-${vid}" value="0" min="0" step="1" oninput="if(players['${vid}'])players['${vid}'].seekTo(this.value)" ${isHost?'':'disabled'}>
-                            <span class="time-text" id="time-${vid}">0:00 / 0:00</span>
+                            <span class="vol-text" title="클릭하여 수정" onclick="${isHost?`openVolModal('active', '${vid}')`:''}">${vol}%</span>
+                            <div style="flex:1; display:flex; align-items:center; gap:10px; margin-left:10px;">
+                                <input type="range" class="progress-bar" id="bar-${vid}" value="0" min="0" step="1" oninput="if(players['${vid}'])players['${vid}'].seekTo(this.value)" ${isHost?'':'disabled'} style="flex:1;">
+                                <span class="time-text" id="time-${vid}">0:00 / 0:00</span>
+                            </div>
                         </div>
                     `;
                     uiContainer.appendChild(div);
@@ -377,7 +392,7 @@
                 height: '1', width: '1', videoId: vid,
                 playerVars: { 'autoplay': 0, 'controls': 0, 'playsinline': 1 },
                 events: {
-                    'onReady': (e) => { if (initialStatus === 'playing') e.target.playVideo(); log(`로드: [${title}]`); },
+                    'onReady': (e) => { if (initialStatus === 'playing') e.target.playVideo(); },
                     'onStateChange': (e) => { if (e.data === YT.PlayerState.ENDED && currentActiveData[vid].loop) e.target.playVideo(); }
                 }
             });
@@ -421,9 +436,9 @@
                         <span style="font-weight:bold; font-size:0.85rem;">${item.title} ${isActive ? '<span style="color:var(--accent); font-size:0.7rem;">[ON]</span>' : ''}</span>
                         <div class="btn-group">
                             ${isHost ? `
-                                <button class="small-btn btn-status" style="background:var(--primary); color:#000;" onclick="openVolModal('playlist', null, ${i})">${item.volume}%</button>
-                                <button class="small-btn ${item.loop?'btn-loop-on':'btn-loop-off'}" onclick="playlist[${i}].loop=!playlist[${i}].loop; render();">${item.loop?'반복':'1회'}</button>
-                                <button class="small-btn btn-play-toggle ${isActive?'on':''}" onclick="${isActive ? `db.ref('rooms/${roomId}/active/${item.id}').remove()` : `db.ref('rooms/${roomId}/active/${item.id}').set({title:'${item.title}', status:'playing', loop:${item.loop}, volume:${item.volume}})`}">${isActive ? 'STOP' : 'PLAY'}</button>
+                                <button class="small-btn btn-status ${isActive?'active':''}" style="background:var(--primary); color:#000;" onclick="openVolModal('playlist', null, ${i})">${item.volume}%</button>
+                                <button class="small-btn btn-status ${item.loop?'active':''}" style="background:var(--primary); color:#000;" onclick="playlist[${i}].loop=!playlist[${i}].loop; render();">${item.loop?'반복':'1회'}</button>
+                                <button class="small-btn btn-status ${isActive?'active':''}" style="background:var(--primary); color:#000;" onclick="${isActive ? `db.ref('rooms/${roomId}/active/${item.id}').remove()` : `db.ref('rooms/${roomId}/active/${item.id}').set({title:'${item.title}', status:'playing', loop:${item.loop}, volume:${item.volume}})`}">${isActive ? 'STOP' : 'PLAY'}</button>
                                 <button class="small-btn" style="background:#555" onclick="openEditModal(${i})">수정</button>
                                 <button class="small-btn" onclick="playlist.splice(${i}, 1); render();" style="background:#b71c1c">X</button>
                             ` : ''}
