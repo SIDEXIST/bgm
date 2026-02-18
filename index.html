@@ -14,7 +14,7 @@
         .modal-content { background: var(--card); padding: 25px; border-radius: 15px; width: 340px; border: 1px solid var(--accent); box-sizing: border-box; }
         .modal-content input { width: 100% !important; margin-bottom: 12px; display: block; box-sizing: border-box; }
         
-        /* 입장 화면 및 버튼 가운데 정렬 */
+        /* 입장 화면 정렬 */
         #login-screen { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: var(--bg); z-index: 20000; display: flex; flex-direction: column; justify-content: center; align-items: center; }
         .login-card { background: var(--card); padding: 30px; border-radius: 15px; border: 1px solid #333; text-align: center; width: 340px; display: flex; flex-direction: column; align-items: center; }
         .login-card h1 { margin-bottom: 20px; width: 100%; }
@@ -33,7 +33,7 @@
         input, button { background: #2c2c2c; color: #fff; border: 1px solid #444; padding: 10px; border-radius: 6px; box-sizing: border-box; }
         button { cursor: pointer; border: none; font-weight: bold; font-size: 0.85rem; display: flex; align-items: center; justify-content: center; }
 
-        /* Master Volume */
+        /* Master Volume 시안색 디자인 */
         .guest-master-vol { background: #333; padding: 12px; border-radius: 10px; margin-bottom: 15px; border: 1px solid var(--accent); }
         .vol-header { display: flex; justify-content: space-between; align-items: center; gap: 10px; margin-bottom: 5px; }
         .vol-title { font-size: 1.05rem; font-weight: bold; color: var(--accent); white-space: nowrap; }
@@ -73,7 +73,7 @@
         .user-tag.host { border-color: var(--primary); color: var(--primary); }
         #log-area { font-size: 0.8rem; color: #aaa; background: #000; padding: 12px; border-radius: 5px; height: 120px; overflow-y: auto; border: 1px solid #333; line-height: 1.6; }
         
-        /* 곡 추가 영역 */
+        /* 곡 추가 3줄 구성 고정 */
         .host-panel-container { display: flex; flex-direction: column; gap: 8px; }
         .add-music-header { display: flex; justify-content: space-between; align-items: center; width: 100%; }
         .add-music-header-controls { display: flex; align-items: center; gap: 10px; }
@@ -109,9 +109,7 @@
             <div class="flex-header">
                 <h2>ROOM: <span id="room-display"></span></h2>
                 <button onclick="copyInviteLink()" style="width:auto; padding:5px 10px; font-size:0.65rem; background:#444;">링크 복사</button>
-            </div>
-            <div id="players-container"></div>
-            <p class="section-title">현재 재생 중인 BGM</p>
+            </div><div id="players-container"></div><p class="section-title">현재 재생 중인 BGM</p>
             <div id="active-tracks-ui"></div>
         </div>
 
@@ -176,6 +174,7 @@
                     isHost = true;
                     document.getElementById('login-title').innerText = "HOST LOGIN";
                     document.getElementById('btn-guest-login').innerText = "관리자 세션 복구";
+                    document.getElementById('btn-guest-login').style.background = "var(--primary)";
                 } else {
                     document.getElementById('login-title').innerText = "GUEST LOGIN";
                 }
@@ -304,6 +303,7 @@
         function updateAllProgress() { if (!isHost) return; Object.keys(players).forEach(vid => { const p = players[vid]; if (p.getPlayerState) { const bar = document.getElementById(`bar-${vid}`); const timeDisp = document.getElementById(`time-${vid}`); if (bar && timeDisp) { const cur = p.getCurrentTime(); const tot = p.getDuration(); bar.max = tot; bar.value = cur; timeDisp.innerText = `${formatTime(cur)} / ${tot > 0 ? formatTime(tot) : "0:00"}`; } } }); }
         function formatTime(s) { const m = Math.floor(s/60); const sec = Math.floor(s%60); return `${m}:${sec<10?'0':''}${sec}`; }
         async function addToPlaylist() { const url = document.getElementById('yt-url').value; const vid = url.match(/(?:v=|\/)([0-9A-Za-z_-]{11})/)?.[1]; if (!vid) return alert("URL 확인"); let title = document.getElementById('custom-title').value, ot = "정보 없음"; try { const res = await fetch(`https://noembed.com/embed?url=${url}`); const data = await res.json(); ot = data.title || "BGM"; if (!title) title = ot; } catch (e) { title = title || "BGM"; } playlist.push({ id: vid, title: title, originalTitle: ot, url: url, loop: document.getElementById('is-loop').checked, volume: 100 }); await db.ref(`rooms/${roomId}/playlist`).set(playlist); document.getElementById('yt-url').value = ""; document.getElementById('custom-title').value = ""; }
+        
         function render() {
             const container = document.getElementById('playlist-container'); container.innerHTML = '';
             playlist.forEach((item, i) => {
@@ -323,11 +323,13 @@
         function closeModal(mId) { document.getElementById(mId).style.display = 'none'; }
         function openResetModal() { document.getElementById('reset-modal').style.display = 'flex'; }
 
-        /* [중요 수정] 초기화 시 호스트 세션 보호 */
+        /* [핵심 수정] 초기화 시 권한 노드 절대 보존 */
         async function executeSoftReset() { 
-            // rooms/코드/active와 rooms/코드/playlist만 선별 삭제
-            await db.ref(`rooms/${roomId}/active`).remove(); 
-            await db.ref(`rooms/${roomId}/playlist`).remove(); 
+            // playlist와 active 노드만 타겟팅하여 삭제 (users 노드는 그대로 둠)
+            await db.ref(`rooms/${roomId}/playlist`).set(null); 
+            await db.ref(`rooms/${roomId}/active`).set(null); 
+            playlist = []; // 로컬 변수 리셋
+            render(); // 화면 갱신
             log("🧹 시스템 초기화(BGM 및 리스트 삭제) 완료."); 
             closeModal('reset-modal'); 
         }
